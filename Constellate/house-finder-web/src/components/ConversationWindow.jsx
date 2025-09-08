@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ResultsShowcase from '../features/ResultsShowcase';
 import ReviewInsights from '../features/ReviewInsights';
 
@@ -16,6 +16,17 @@ export default function ConversationWindow() {
   const [location, setLocation] = useState('');
   const [budget, setBudget] = useState('');
   const [utility, setUtility] = useState('');
+
+  const nlwebRef = useRef(null);
+
+  useEffect(() => {
+    if (window.NLWeb && nlwebRef.current) {
+      window.NLWeb.init({
+        container: nlwebRef.current,
+        // ...other config options as needed...
+      });
+    }
+  }, []);
 
   // Placeholder: Replace with real API calls
   const fetchHomes = () => {
@@ -71,6 +82,7 @@ export default function ConversationWindow() {
       <button onClick={handleSend}>Send</button>
       <ResultsShowcase results={results} onSelect={setSelectedHome} />
       {selectedHome && <ReviewInsights home={selectedHome} />}
+      <div ref={nlwebRef} />
     </div>
   );
 }
