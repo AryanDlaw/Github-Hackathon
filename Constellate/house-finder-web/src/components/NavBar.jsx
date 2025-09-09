@@ -26,9 +26,30 @@ export default function NavBar() {
         Constellate
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        <button onClick={() => scrollToSection('conversation-section')} style={navBtnStyle}>Conversation Window</button>
-        <button onClick={() => scrollToSection('learn-section')} style={navBtnStyle}>Learn</button>
-        <button onClick={() => scrollToSection('about-section')} style={navBtnStyle}>About</button>
+        <button onClick={() => {
+          if (window.location.pathname === '/') {
+            scrollToSection('conversation-section');
+          } else {
+            window.navigateToPage('home');
+            setTimeout(() => scrollToSection('conversation-section'), 100);
+          }
+        }} style={navBtnStyle}>Convo</button>
+        <button onClick={() => {
+          if (window.location.pathname === '/') {
+            scrollToSection('learn-section');
+          } else {
+            window.navigateToPage('learn');
+          }
+        }} style={navBtnStyle}>Learn</button>
+        <button onClick={() => {
+          if (window.location.pathname === '/') {
+            scrollToSection('about-section');
+          } else {
+            window.navigateToPage('home');
+            setTimeout(() => scrollToSection('about-section'), 100);
+          }
+        }} style={navBtnStyle}>About</button>
+        <button onClick={() => window.navigateToPage('listings')} style={navBtnStyle}>Listings</button>
       </div>
     </nav>
   );
